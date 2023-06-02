@@ -79,7 +79,7 @@ const SearchBooks = () => {
       const { data } = await saveBook({
         variables: { input: bookToSave },
       });
-      setSavedBookIds([...savedBookIds, data.saveBook._id]);
+      setSavedBookIds([...savedBookIds, bookId]);
     } catch (err) {
       console.error(err);
     }
@@ -132,10 +132,10 @@ const SearchBooks = () => {
                     <Card.Text>{book.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                        disabled={savedBookIds?.includes(book.bookId)}
                         className='btn-block btn-info'
                         onClick={() => handleSaveBook(book.bookId)}>
-                        {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
+                        {savedBookIds?.includes(book.bookId)
                           ? 'This book has already been saved!'
                           : 'Save this Book!'}
                       </Button>
